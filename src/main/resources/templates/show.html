@@ -7,14 +7,18 @@
 <body>
 <p th:text="${user.getName()}">VALUE</p>
 <p th:text="${user.getSurName()}">VALUE</p>
-<p th:text="${user.getAge()}">VALUE</p>
+<p th:text="${user.getEmail()}">VALUE</p>
 
 <a th:href="@{/{id}/edit(id=${user.getId()})}">
     <input type="submit" value="Обновить"/>
 </a>
 
+<a href="/logout">
+    <input type="submit" value="Выйти"/>
+</a>
+
 <form th:method="DELETE" th:action="@{/{id}(id=${user.getId()})}">
-<input type="submit" value="Удалить"/>
+    <input type="submit" value="Удалить"/>
 </form>
 
 </body>

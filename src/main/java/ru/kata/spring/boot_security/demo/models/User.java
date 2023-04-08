@@ -3,7 +3,7 @@ package ru.kata.spring.boot_security.demo.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users",uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class User {
 
     @Id
@@ -13,16 +13,18 @@ public class User {
     private String name;
     @Column(name = "sur_name")
     private String surName;
-    @Column(name = "age")
-    private int age;
-
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
-
     @Column(name = "password")
     private String password;
 
     public User() {
+    }
+    public User(String name, String surName, String email, String password) {
+        this.name = name;
+        this.surName = surName;
+        this.email = email;
+        this.password = password;
     }
 
     public String getEmail() {
@@ -38,14 +40,6 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public User(String name, String surName, int age, String email, String password) {
-        this.name = name;
-        this.surName = surName;
-        this.age = age;
-        this.email = email;
         this.password = password;
     }
 
@@ -73,14 +67,6 @@ public class User {
         this.surName = surName;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
 
     @Override
     public String toString() {
@@ -88,7 +74,6 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surName='" + surName + '\'' +
-                ", age=" + age +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';

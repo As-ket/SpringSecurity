@@ -6,17 +6,24 @@
 </head>
 <body>
 <form th:method="POST" th:action="@{/}" th:object="${user}">
-  <label for="name">Введите имя</label>
-  <input type="text" placeholder="Имя" th:field="*{name}" id="name">
-  <br/>
-  <label for="surName">Введите фамилию</label>
-  <input type="text" placeholder="Фамилия" th:field="*{surName}" id="surName">
-  <br/>
-  <label for="age">Введите возраст</label>
-  <input type="number" min="0" placeholder="Возраст" th:field="*{age}" id="age">
-  <br/>
-  <input type="submit" value="Создать"/>
+    <label for="name">Введите имя</label>
+    <input type="text" placeholder="Имя" th:field="*{name}" id="name">
+    <br/>
+    <label for="surName">Введите фамилию</label>
+    <input type="text" placeholder="Фамилия" th:field="*{surName}" id="surName">
+    <br/>
+    <label for="email">Введите email</label>
+    <input type="text" placeholder="email" th:field="*{email}" id="email">
+    <br/>
+    <label for="password">Введите пароль</label>
+    <input type="password" placeholder="Пароль" th:field="*{password}" id="password">
+    <br/>
+    <input type="submit" value="Создать"/>
 </form>
+
+<a href="/logout">
+    <input type="submit" value="Выйти"/>
+</a>
 
 </body>
 </html>

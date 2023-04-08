@@ -13,11 +13,17 @@
   <label for="surName">Введите фамилию</label>
   <input type="text" placeholder="Фамилия" th:field="*{surName}" id="surName">
   <br/>
-  <label for="age">Введите возраст</label>
-  <input type="number" min="0" placeholder="Возраст" th:field="*{age}" id="age">
+  <label for="email">Введите email</label>
+  <input type="text" placeholder="email" th:field="*{email}" id="email">
+  <br/>
+  <label for="password">Введите пароль</label>
+  <input type="password" placeholder="Пароль" th:field="*{password}" id="password">
   <br/>
   <input type="submit" value="Обновить"/>
 </form>
+<a href="/logout">
+  <input type="submit" value="Выйти"/>
+</a>
 
 </body>
 </html>
