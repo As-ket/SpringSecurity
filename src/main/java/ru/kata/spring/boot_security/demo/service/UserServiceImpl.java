@@ -47,21 +47,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User findByname (String name) {
+    public User findByName (String name) {
         return userRepository.findByName(name);
     }
 
     @Override
+    @Transactional
     public void addUser(User user) {
         userRepository.save(user);
     }
 
     @Override
+    @Transactional
     public void updateUser(User user) {
         userRepository.save(user);
     }
 
     @Override
+    @Transactional
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
@@ -75,8 +78,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return user;
     }
 
-    @Transactional
     @Override
+    @Transactional
     public void register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
