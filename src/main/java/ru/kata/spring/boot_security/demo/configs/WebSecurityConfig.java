@@ -26,22 +26,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.userServiceImpl = userServiceImpl;
     }
 
-
-//    public WebSecurityConfig(SuccessUserHandler successUserHandler) {
-//        this.successUserHandler = successUserHandler;
-//    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userServiceImpl)
-        .passwordEncoder(getPasswordEncoder());
+                .passwordEncoder(getPasswordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/index", "/registration").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/", "/index").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().successHandler(successUserHandler)
@@ -57,18 +54,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    // аутентификация inMemory
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("user")
-//                        .roles("USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
 }

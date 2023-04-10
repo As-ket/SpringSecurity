@@ -2,24 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Все пользователи</title>
+    <title>Title</title>
 </head>
 <body>
-<div th:each="user : ${allUsers}">
-    <a th:href="@{/{id}(id=${user.getId()})}" th:text="${user.getName()}">user</a>
-</div>
 
-<br/>
-<hr/>
-
-<a href="/new">
-    <input type="submit" value="Создать нового пользователя"/>
-</a>
-
-<a href="/logout">
+<table border ="1">
+    <caption>О пользователе</caption>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Возраст</th>
+        <th>Почта</th>
+        <th>Роль</th>
+    </tr>
+    <div th:each ="user : ${user}">
+        <tr><td><div th:text="${user.getId}"></div></td><td><div th:text="${user.getName}"></div></td>
+            <td><div th:text="${user.getLastName}"></div></td><td><div th:text="${user.getAge}"></div></td>
+            <td><div th:text="${user.getEmail}"></div></td><td><div th:text="${user.getRoles()}"></div></td>
+    </div>
+</table>
+<form th:action="@{/logout}">
     <input type="submit" value="Выйти"/>
-</a>
-
+</form>
 </body>
 </html>
-

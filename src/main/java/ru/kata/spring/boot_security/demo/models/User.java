@@ -1,13 +1,18 @@
 package ru.kata.spring.boot_security.demo.models;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
-@Table(name = "users",uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
-public class User {
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
     @Column(name = "name")
     private String name;
@@ -17,9 +22,15 @@ public class User {
     private String email;
     @Column(name = "password")
     private String password;
+    @ManyToMany
+    @JoinTable(name = "role_user"
+            , joinColumns = @JoinColumn(name = "user_id")
+            , inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> role;
 
     public User() {
     }
+
     public User(String name, String surName, String email, String password) {
         this.name = name;
         this.surName = surName;
@@ -35,6 +46,7 @@ public class User {
         this.email = email;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -67,6 +79,13 @@ public class User {
         this.surName = surName;
     }
 
+    public Set<Role> getRole() {
+        return role;
+    }
+
+    public void setRole(Set<Role> role) {
+        this.role = role;
+    }
 
     @Override
     public String toString() {
@@ -77,5 +96,35 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRole();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.getName();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
